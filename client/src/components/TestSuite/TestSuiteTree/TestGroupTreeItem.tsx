@@ -13,6 +13,7 @@ const TestGroupTreeItem: FC<TestGroupTreeItemProps> = ({
   id,
   test_groups,
   result,
+  user_runnable,
   runTests,
   onLabelClick,
 }) => {
@@ -37,6 +38,7 @@ const TestGroupTreeItem: FC<TestGroupTreeItemProps> = ({
           runTests={runTests}
           result={result}
           runnableType={RunnableType.TestGroup}
+          user_runnable={user_runnable}
         />
       }
       onLabelClick={(event) => onLabelClick(event, id)}

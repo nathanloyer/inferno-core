@@ -17,9 +17,28 @@ interface TestGroupListItemProps extends TestGroup {
   runTests: (runnableType: RunnableType, runnableId: string) => void;
 }
 
-const TestGroupListItem: FC<TestGroupListItemProps> = ({ title, result, id, runTests }) => {
+const TestGroupListItem: FC<TestGroupListItemProps> = ({
+  title,
+  result,
+  id,
+  user_runnable,
+  runTests,
+}) => {
   const styles = useStyles();
-
+  const runButton = user_runnable ? (
+    <ListItemSecondaryAction>
+      <IconButton
+        edge="end"
+        size="small"
+        onClick={() => {
+          runTests(RunnableType.TestGroup, id);
+        }}
+        data-testid={`${id}-run-button`}
+      >
+        <PlayArrowIcon />
+      </IconButton>
+    </ListItemSecondaryAction>
+  ) : null;
   return (
     <ListItem className={styles.listItem}>
       <ListItemIcon>
@@ -34,18 +53,7 @@ const TestGroupListItem: FC<TestGroupListItemProps> = ({ title, result, id, runT
         secondary={result?.result_message}
       />
       <div className={styles.testIcon}>{<ResultIcon result={result} />}</div>
-      <ListItemSecondaryAction>
-        <IconButton
-          edge="end"
-          size="small"
-          onClick={() => {
-            runTests(RunnableType.TestGroup, id);
-          }}
-          data-testid={`${id}-run-button`}
-        >
-          <PlayArrowIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
+      {runButton}
     </ListItem>
   );
 };

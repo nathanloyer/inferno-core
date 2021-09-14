@@ -11,9 +11,17 @@ export interface TreeItemLabelProps {
   result?: Result;
   runnableType: RunnableType;
   runTests: (runnableType: RunnableType, runnableId: string) => void;
+  user_runnable?: boolean;
 }
 
-const TreeItemLabel: FC<TreeItemLabelProps> = ({ title, id, result, runTests, runnableType }) => {
+const TreeItemLabel: FC<TreeItemLabelProps> = ({
+  title,
+  id,
+  result,
+  runTests,
+  runnableType,
+  user_runnable
+}) => {
   const styles = useStyles();
   return (
     <div className={styles.labelRoot} data-testid={`tiLabel-${id}`}>
@@ -21,13 +29,15 @@ const TreeItemLabel: FC<TreeItemLabelProps> = ({ title, id, result, runTests, ru
         {title}
       </Typography>
       <CondensedResultIcon result={result} />
-      <IconButton
-        data-testid={`runButton-${id}`}
-        onClick={() => runTests(runnableType, id)}
-        className={styles.labelRunButton}
-      >
-        <PlayArrowIcon />
-      </IconButton>
+      {user_runnable ? (
+        <IconButton
+          data-testid={`runButton-${id}`}
+          onClick={() => runTests(runnableType, id)}
+          className={styles.labelRunButton}
+        >
+          <PlayArrowIcon />
+        </IconButton>
+      ) : null}
     </div>
   );
 };

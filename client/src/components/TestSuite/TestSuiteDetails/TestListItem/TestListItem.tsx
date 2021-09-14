@@ -36,6 +36,7 @@ const TestListItem: FC<TestListItemProps> = ({
   result,
   id,
   description,
+  user_runnable,
   runTests,
   updateRequest,
 }) => {
@@ -91,6 +92,21 @@ const TestListItem: FC<TestListItemProps> = ({
       'No description'
     );
 
+  const runButton = user_runnable ? (
+    <ListItemSecondaryAction>
+      <IconButton
+        edge="end"
+        size="small"
+        onClick={() => {
+          runTests(RunnableType.Test, id);
+        }}
+        data-testid={`${id}-run-button`}
+      >
+        <PlayArrowIcon />
+      </IconButton>
+    </ListItemSecondaryAction>
+  ) : null;
+
   return (
     <Fragment>
       <Box className={styles.listItem}>
@@ -100,18 +116,7 @@ const TestListItem: FC<TestListItemProps> = ({
           {messagesBadge}
           {requestsBadge}
           {expandButton}
-          <ListItemSecondaryAction>
-            <IconButton
-              edge="end"
-              size="small"
-              onClick={() => {
-                runTests(RunnableType.Test, id);
-              }}
-              data-testid={`${id}-run-button`}
-            >
-              <PlayArrowIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
+          {runButton}
         </ListItem>
         {result?.result_message ? (
           <ReactMarkdown className={styles.resultMessageMarkdown}>
