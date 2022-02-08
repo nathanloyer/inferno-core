@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/inferno-framework/g10-certification-test-kit.git
-  revision: fcc378136e1eb28bbe31ae6c05e30c3799c3b42c
-  branch: main
+  revision: a578bead6690d46a0501f3e8ad531e7fd8dde34f
+  branch: language-updates
   specs:
     g10_certification_test_kit (0.0.1)
       bloomer (~> 1.0.0)

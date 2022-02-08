@@ -6,7 +6,7 @@ gemspec
 
 gem 'g10_certification_test_kit',
     git: 'https://github.com/inferno-framework/g10-certification-test-kit.git',
-    branch: 'main'
+    branch: 'language-updates'
 gem 'smart_app_launch_test_kit',
     git: 'https://github.com/inferno-framework/smart-app-launch-test-kit.git',
     branch: 'main'
