@@ -34,6 +34,16 @@ interface TestListItemProps {
   view: 'report' | 'run';
 }
 
+const sameProps = (oldProps: TestListItemProps, newProps: TestListItemProps) => {
+  const sameResultId = oldProps.test.result?.id === newProps.test.result?.id;
+  const sameTestRunInProgress = oldProps.testRunInProgress === newProps.testRunInProgress;
+  const sameView = oldProps.view === newProps.view;
+
+  return (
+    sameResultId && sameTestRunInProgress && sameView
+  );
+};
+
 const TestListItem: FC<TestListItemProps> = ({
   test,
   runTests,
@@ -168,4 +178,4 @@ const TestListItem: FC<TestListItemProps> = ({
   );
 };
 
-export default TestListItem;
+export default React.memo(TestListItem, sameProps);

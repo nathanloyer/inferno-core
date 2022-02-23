@@ -29,6 +29,32 @@ interface TestGroupListItemProps {
   view: 'report' | 'run';
 }
 
+const sameProps = (oldProps: TestGroupListItemProps, newProps: TestGroupListItemProps) => {
+  const oldGroup = oldProps.testGroup;
+  const newGroup = newProps.testGroup;
+  const sameResultId = oldGroup.result?.id === newGroup.result?.id;
+  const sameResult = oldGroup.result?.result === newGroup.result?.result;
+  const oldChildResultIds =
+    oldGroup.test_groups
+            .map((group) => group.result?.id)
+            .concat(oldGroup.tests.map((test) => test.result?.id));
+  const newChildResultIds =
+    newGroup.test_groups
+            .map((group) => group.result?.id)
+            .concat(newGroup.tests.map((test) => test.result?.id));
+  const sameChildResultIds =
+    oldChildResultIds.length === newChildResultIds.length &&
+    oldChildResultIds.every((value, index) => value === newChildResultIds[index]);
+  const sameTestRunInProgress = oldProps.testRunInProgress === newProps.testRunInProgress;
+  const sameView = oldProps.view === newProps.view;
+
+  console.log(`${oldProps.testGroup.id} old:`, oldProps.testGroup.result)
+  console.log(`${newProps.testGroup.id} new:`, newProps.testGroup.result)
+  return (
+    sameResultId && sameResult && sameChildResultIds && sameTestRunInProgress && sameView
+  );
+};
+
 const TestGroupListItem: FC<TestGroupListItemProps> = ({
   testGroup,
   runTests,
@@ -178,4 +204,4 @@ const TestGroupListItem: FC<TestGroupListItemProps> = ({
   );
 };
 
-export default TestGroupListItem;
+export default React.memo(TestGroupListItem, sameProps);
