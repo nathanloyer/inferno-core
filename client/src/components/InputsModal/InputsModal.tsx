@@ -147,10 +147,13 @@ const InputsModal: FC<InputsModalProps> = ({
           multiline
           rows={10}
           onChange={(e) => {
-            console.log(disable);
-            setDisable(!disable);
             setInput(e.target.value);
-            console.log(disable);
+            try {
+              JSON.parse(e.target.value);
+              setDisable(false);
+            } catch (e) {
+              setDisable(true);
+            }
           }}
         ></TextField>
       </DialogContent>
@@ -158,11 +161,7 @@ const InputsModal: FC<InputsModalProps> = ({
         <Button color="primary" onClick={hideModal} data-testid="cancel-button">
           Cancel
         </Button>
-        <Button
-          onClick={submitClicked}
-          // disabled={missingRequiredInput}
-          disabled={disable}
-        >
+        <Button onClick={submitClicked} disabled={missingRequiredInput && disable}>
           Submit
         </Button>
       </DialogActions>
