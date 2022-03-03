@@ -66,6 +66,7 @@ const InputsModal: FC<InputsModalProps> = ({
     return (!input.optional && !inputsMap.get(input.name)) || oAuthMissingRequiredInput;
   });
   const [disable, setDisable] = React.useState<boolean>(false);
+  const [input, setInput] = React.useState<string>(title);
 
   function submitClicked(): void {
     const inputs_with_values: TestInput[] = [];
@@ -142,11 +143,13 @@ const InputsModal: FC<InputsModalProps> = ({
         </DialogContentText>
         <List>{inputFields}</List>
         <TextField
+          value={input}
           multiline
           rows={10}
-          onChange={() => {
+          onChange={(e) => {
             console.log(disable);
             setDisable(!disable);
+            setInput(e.target.value);
             console.log(disable);
           }}
         ></TextField>
