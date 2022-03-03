@@ -6,6 +6,7 @@ import {
   DialogContentText,
   DialogTitle,
   List,
+  TextField,
 } from '@mui/material';
 import { OAuthCredentials, RunnableType, TestInput } from 'models/testSuiteModels';
 import React, { FC, useEffect } from 'react';
@@ -64,6 +65,7 @@ const InputsModal: FC<InputsModalProps> = ({
     if (input.type === 'radio') return false; // radio inputs will always be required and have a default value
     return (!input.optional && !inputsMap.get(input.name)) || oAuthMissingRequiredInput;
   });
+  const [disable, setDisable] = React.useState<boolean>(false);
 
   function submitClicked(): void {
     const inputs_with_values: TestInput[] = [];
@@ -139,12 +141,25 @@ const InputsModal: FC<InputsModalProps> = ({
           <ReactMarkdown>{instructions}</ReactMarkdown>
         </DialogContentText>
         <List>{inputFields}</List>
+        <TextField
+          multiline
+          rows={10}
+          onChange={() => {
+            console.log(disable);
+            setDisable(!disable);
+            console.log(disable);
+          }}
+        ></TextField>
       </DialogContent>
       <DialogActions>
         <Button color="primary" onClick={hideModal} data-testid="cancel-button">
           Cancel
         </Button>
-        <Button color="primary" onClick={submitClicked} disabled={missingRequiredInput}>
+        <Button
+          onClick={submitClicked}
+          // disabled={missingRequiredInput}
+          disabled={disable}
+        >
           Submit
         </Button>
       </DialogActions>
