@@ -166,7 +166,7 @@ module Inferno
         # @param profile_url [String]
         # @return [String] the body of the validation response
         def validate(resource, profile_url)
-          RestClient.post(
+          post(
             "#{url}/validate",
             resource.to_json,
             params: { profile: profile_url }
